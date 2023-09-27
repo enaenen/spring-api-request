@@ -25,7 +25,7 @@ public class TestController {
 
     @GetMapping("/token")
     public String getToken() {
-        log.info("clientId: {}", clientId);
+        log.info("clientId: {} clientSecret {}, grantType {}", clientId, clientSecret, grantType);
         String token = intraFeignClient.getToken(
                 IntraRequestDto.builder()
                         .clientId(clientId)
@@ -33,6 +33,7 @@ public class TestController {
                         .grantType(grantType)
                         .build()
         );
+        log.info("token: {}", token);
         return token;
     }
 }
