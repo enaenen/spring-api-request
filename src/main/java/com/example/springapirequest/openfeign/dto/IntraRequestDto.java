@@ -5,9 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class IntraRequestDto {
     @JsonAlias("grant_type")
     private String grantType;
@@ -15,6 +15,4 @@ public class IntraRequestDto {
     private String clientId;
     @JsonAlias("client_secret")
     private String clientSecret;
-
-
 }

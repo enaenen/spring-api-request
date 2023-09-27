@@ -3,8 +3,8 @@ package com.example.springapirequest.controller;
 import com.example.springapirequest.openfeign.IntraFeignClient;
 import com.example.springapirequest.openfeign.dto.IntraRequestDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,20 +12,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/test")
 @RequiredArgsConstructor
+@Log4j2
 public class TestController {
     private final IntraFeignClient intraFeignClient;
 
     @Value("${intra.client-id}")
-    private final String clientId;
+    private String clientId;
+    @Value("${intra.client-secret}")
+    private String clientSecret;
+    @Value("${intra.grant-type}")
+    private String grantType;
 
     @GetMapping("/token")
     public String getToken() {
-        intraFeignClient.getToken(
+        log.info("clientId: {}", clientId);
+        String token = intraFeignClient.getToken(
                 IntraRequestDto.builder()
-                        .clientId("u-s4t2ud-fe7fae06169cf2621b8e427a415c5ae6e8f6516840ed7373486e7a7c4598bf0b")
-                        .clientSecret("")
+                        .clientId(clientId)
+                        .clientSecret(clientSecret)
+                        .grantType(grantType)
                         .build()
-                );
-        return "test/token";
+        );
+        return token;
     }
 }

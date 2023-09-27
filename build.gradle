@@ -48,3 +48,12 @@ dependencyManagement {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+tasks.register('copyMainConfig', Copy) {
+    from 'configs/main/resources'
+    into 'src/main/resources'
+}
+
+tasks.named('processResources') {
+    dependsOn 'copyMainConfig'
+}
